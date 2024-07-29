@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設備投資入力フォーム</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="loadInvestmentData()">
+    <div class="container">
+        <div class="column">
+            <h2>設備投資入力フォーム</h2>
+            <div class="form-section">
+                <div class="section-title">投資情報</div>
+                <div class="form-group">
+                    <label for="interior">内装:</label>
+                    <input type="number" id="interior" value="11250000">
+                </div>
+                <div class="form-group">
+                    <label for="fixtures">什器:</label>
+                    <input type="number" id="fixtures" value="4400000">
+                </div>
+                <div class="form-group">
+                    <label for="lighting">照明:</label>
+                    <input type="number" id="lighting" value="330000">
+                </div>
+                <div class="form-group">
+                    <label for="design">設計料:</label>
+                    <input type="number" id="design" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="system">レジ・システム・ハンディ等:</label>
+                    <input type="number" id="system" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="construction">B工事:</label>
+                    <input type="number" id="construction" value="1700000">
+                </div>
+                <div class="form-group">
+                    <label for="common">共通内装費:</label>
+                    <input type="number" id="common" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="cooperation">現場協力金:</label>
+                    <input type="number" id="cooperation" value="570000">
+                </div>
+                <div class="form-group">
+                    <label for="management">内装管理費:</label>
+                    <input type="number" id="management" value="570000">
+                </div>
+                <div class="form-group">
+                    <label for="promotion">オープン販促費:</label>
+                    <input type="number" id="promotion" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="extinguisher">消化器:</label>
+                    <input type="number" id="extinguisher" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="phone">電話配線工事:</label>
+                    <input type="number" id="phone" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="register">レジインライン工事:</label>
+                    <input type="number" id="register" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="restoration">現状回復:</label>
+                    <input type="number" id="restoration" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="deposit">保証金金利額:</label>
+                    <input type="number" id="deposit" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="store">店舗備品代:</label>
+                    <input type="number" id="store" value="290000">
+                </div>
+                <div class="form-group">
+                    <label for="assistance">陳列応援経費:</label>
+                    <input type="number" id="assistance" value="800000">
+                </div>
+                <div class="form-group">
+                    <label for="pre-opening">開店前人件費:</label>
+                    <input type="number" id="pre-opening" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="recruitment">採用費（会場・媒体）:</label>
+                    <input type="number" id="recruitment" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="flyers">オープニングチラシ:</label>
+                    <input type="number" id="flyers" value="300000">
+                </div>
+                <div class="form-group">
+                    <label for="application">各種申請料:</label>
+                    <input type="number" id="application" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="construction-cost">内装工事経費落ち想定額:</label>
+                    <input type="number" id="construction-cost" value="3200000">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>総計:</label>
+                <span id="total-investment">0</span>
+            </div>
+            <div class="form-group">
+                <button onclick="calculateTotal()">総計を表示</button>
+                <button class="back-button" onclick="saveAndReturn()">戻る</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        // ページ読み込み時にフォームデータを読み込む
+        window.onload = function() {
+            loadInvestmentData();
+        };
+    </script>
+</body>
+</html>

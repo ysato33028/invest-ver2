@@ -1,0 +1,161 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #454545; /* 背景色をダークグレーに変更 */
+    color: #FAFAFA; /* テキストカラーを白に設定 */
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #454545; /* コンテナ背景色をダークグレーに変更 */
+    border-radius: 8px;
+}
+
+.column {
+    flex: 1;
+    min-width: 300px;
+    max-width: 50%;
+    margin: 10px;
+    background-color: #FAFAFA; /* カラム背景色を白に変更 */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    background-color: #2ABCA7; /* タイトル背景色をターコイズに変更 */
+    padding: 18px 0;
+    font-size: 1.4em;
+    color: #FAFAFA; /* タイトルテキストカラーを白に設定 */
+    border-radius: 6px 6px 0 0;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: #454545;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+label {
+    flex: 1;
+    margin-right: 10px;
+    color: #454545;
+}
+
+input {
+    flex: 2;
+    padding: 5px;
+    font-size: 16px;
+    color: #454545;
+}
+
+span {
+    flex: 2;
+    padding: 5px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    color: #454545;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #45a049;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #ff4d54;
+}
+
+btn-s {
+  width: 20%;
+  height: 10%;
+  background: #fff;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+}
+
+btn-s p {
+  text-align: center;
+  font-size: 14px;
+}
+
+btn-s:hover {
+  -webkit-transform: scale(1.10);
+  transform: scale(1.10);
+  background: #ff4d54;
+  color: white;
+}
+
+/* シマシマ効果 */
+.form-group:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.form-group:nth-child(odd) {
+    background-color: #fff;
+}
+
+/* 既存のスタイルに追加 */
+.input-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-button:hover {
+    background-color: #ff4d54;
+}
+
+/* 既存のスタイルに追加 */
+.back-button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.back-button:hover {
+    background-color: #444;
+}

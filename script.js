@@ -1,5 +1,5 @@
 // script.js
-document.getElementById('generate').addEventListener('click', function () {
+document.getElementById('export-ppt-button').addEventListener('click', function () {
     let pptx = new PptxGenJS();
     let slide = pptx.addSlide();
     slide.addText('Demo Presentation', { x: 1, y: 1, fontSize: 18 });

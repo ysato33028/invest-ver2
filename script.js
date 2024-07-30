@@ -1,5 +1,5 @@
 // script.js
-document.getElementById('export-ppt-button').addEventListener('click', function(e) {
+document.getElementById('exportForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
     const text = document.getElementById('textInput').value;

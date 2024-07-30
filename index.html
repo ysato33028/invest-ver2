@@ -152,59 +152,12 @@
             document.getElementById('total-investment-input').textContent = totalInvestment.toLocaleString();
         };
         // PPTエクスポート機能
-        document.getElementById('export-ppt-button').addEventListener('click', function() {
-            // 各フィールドからデータを取得
-            const sales = document.getElementById('sales').textContent;
-            const costofsales = document.getElementById('cost-of-sales').textContent;
-            const grossprofit = document.getElementById('gross-profit').textContent;
-            const personnel = document.getElementById('total-personnel').textContent;
-            const promotion = document.getElementById('total-promotion').textContent;
-            const equipmentcost = document.getElementById('total-equipment-cost').textContent;
-            const annualdepreciation = document.getElementById('annual-depreciation').textContent;
-            const totalsga = document.getElementById('total-sga').textContent;
-            const operatingprofit = document.getElementById('operating-profit').textContent;
-            const tax = document.getElementById('tax').textContent;
-            const netincome = document.getElementById('net-income').textContent;
-            const cashflow = document.getElementById('cash-flow').textContent;
-            const paybackperiod = document.getElementById('payback-period').textContent;
+            document.getElementById('generate').addEventListener('click', function () {
+            let pptx = new PptxGenJS();
+            let slide = pptx.addSlide();
+            slide.addText('Demo Presentation', { x: 1, y: 1, fontSize: 18 });
 
-            // 取得したデータをオブジェクトにまとめる
-            const data = {
-                sales: sales,
-                costofsales: costofsales,
-                grossprofit: grossprofit,
-                personnel: personnel,
-                promotion: promotion,
-                equipmentcost: equipmentcost,
-                annualdepreciation: annualdepreciation,
-                totalsga: totalsga,
-                operatingprofit: operatingprofit,
-                tax: tax,
-                netincome: netincome,
-                cashflow: cashflow,
-                paybackperiod: paybackperiod
-            };
-
-            // サーバーにデータを送信
-            fetch('/export-ppt', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                const url = window.URL.createObjectURL(new Blob([blob]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', '/output.pptx');
-                document.body.appendChild(link);
-                link.click();
-                link.parentNode.removeChild(link);
-            })
-            .catch(error => {
-                console.error('エクスポート中にエラーが発生しました:', error);
+            pptx.writeFile({ fileName: 'demo_presentation.pptx' });
             });
         });
     </script>

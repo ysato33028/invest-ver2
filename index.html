@@ -139,6 +139,12 @@
                 <div class="form-group">
                     <button id="export-ppt-button" class="input-button">PPTエクスポート</button>
                 </div>
+                <form id="exportForm">
+                    <label for="textInput">Enter Text:</label>
+                    <input type="text" id="textInput" required>
+                    <button type="submit">Export to PPT</button>
+                </form>
+                <script src="script.js"></script>
             </div>
         </div>
     </div>
@@ -208,6 +214,5 @@
             });
         });
     </script>
-    <script src="server.js"></script>
 </body>
 </html>

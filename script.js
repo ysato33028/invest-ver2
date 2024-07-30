@@ -42,7 +42,7 @@ document.getElementById('export-ppt-button').addEventListener('click', function(
 
     const opts = {
         x: 1,
-        y: 0.8,
+        y: 0.5,
         w: '80%',
         colW: [2.54, 5],
         border: { pt: '1', color: 'FFFFFF' },

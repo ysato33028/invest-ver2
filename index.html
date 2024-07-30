@@ -145,104 +145,51 @@
     <button onclick="calculate()">計算する</button>
     <script src="app.js"></script>
     <script>
-        // ページ読み込み時にフォームデータを読み込む
         window.onload = function() {
             loadFormData();
             const totalInvestment = parseFloat(localStorage.getItem('totalInvestment')) || 0;
             document.getElementById('total-investment-input').textContent = totalInvestment.toLocaleString();
         };
-        // PPTエクスポート機能
-        document.getElementById('export-ppt-button').addEventListener('click', function() {
 
-            // 各フィールドからデータを取得
+        document.getElementById('export-ppt-button').addEventListener('click', function() {
             const sales = document.getElementById('sales').textContent;
-            const costofsales = document.getElementById('cost-of-sales').textContent;
-            const grossprofit = document.getElementById('gross-profit').textContent;
+            const costOfSales = document.getElementById('cost-of-sales').textContent;
+            const grossProfit = document.getElementById('gross-profit').textContent;
             const personnel = document.getElementById('total-personnel').textContent;
             const promotion = document.getElementById('total-promotion').textContent;
-            const equipmentcost = document.getElementById('total-equipment-cost').textContent;
-            const annualdepreciation = document.getElementById('annual-depreciation').textContent;
-            const totalsga = document.getElementById('total-sga').textContent;
-            const operatingprofit = document.getElementById('operating-profit').textContent;
+            const equipmentCost = document.getElementById('total-equipment-cost').textContent;
+            const annualDepreciation = document.getElementById('annual-depreciation').textContent;
+            const totalSGA = document.getElementById('total-sga').textContent;
+            const operatingProfit = document.getElementById('operating-profit').textContent;
             const tax = document.getElementById('tax').textContent;
-            const netincome = document.getElementById('net-income').textContent;
-            const cashflow = document.getElementById('cash-flow').textContent;
-            const paybackperiod = document.getElementById('payback-period').textContent;
+            const netIncome = document.getElementById('net-income').textContent;
+            const cashFlow = document.getElementById('cash-flow').textContent;
+            const paybackPeriod = document.getElementById('payback-period').textContent;
 
-            // 取得したデータをオブジェクトにまとめる
-            const data = {
-                sales: sales,
-                costofsales: costofsales,
-                grossprofit: grossprofit,
-                personnel: personnel,
-                promotion: promotion,
-                equipmentcost: equipmentcost,
-                annualdepreciation: annualdepreciation,
-                totalsga: totalsga,
-                operatingprofit: operatingprofit,
-                tax: tax,
-                netincome: netincome,
-                cashflow: cashflow,
-                paybackperiod: paybackperiod
-            };
-
-            const pptx = new pptxgen();
+            const pptx = new PptxGenJS();
             const slide = pptx.addSlide();
-
             slide.addText('投資回収シミュレーション', { x: 1, y: 0.5, fontSize: 24, bold: true, fontFace: 'メイリオ'  });
 
             const tableData = [
-                [{ text: '勘定科目', options: { fill: { color: '45A049' }, color: 'FFFFFF', fontFace: 'メイリオ'  } },
-                 { text: '計算結果', options: { fill: { color: '45A049' }, color: 'FFFFFF', fontFace: 'メイリオ'  } }],
-                ['売上高', sales],
-                ['売上原価', costOfSales],
-                ['売上総利益', grossProfit],
-                ['人件費計', personnel],
-                ['販売促進費計', promotion],
-                ['設備費計', equipmentCost],
-                ['うち減価償却費', annualDepreciation],
-                ['販売費一般管理費合計', totalSGA],
-                ['営業利益', operatingProfit],
-                ['税金概算（40％）', tax],
-                ['税引後純利益', netIncome],
-                ['キャッシュフロー', cashFlow],
-                ['投資回収期間（ヶ月）', paybackPeriod]
+                [{ text: '勘定科目', options: { fill: { color: '45B39D' }, fontFace: 'メイリオ' } }, { text: '金額', options: { fill: { color: '45B39D' }, fontFace: 'メイリオ' } }],
+                [{ text: '売上高', options: { fontFace: 'メイリオ' } }, { text: sales, options: { fontFace: 'メイリオ' } }],
+                [{ text: '売上原価', options: { fontFace: 'メイリオ' } }, { text: costOfSales, options: { fontFace: 'メイリオ' } }],
+                [{ text: '売上総利益', options: { fontFace: 'メイリオ' } }, { text: grossProfit, options: { fontFace: 'メイリオ' } }],
+                [{ text: '人件費計', options: { fontFace: 'メイリオ' } }, { text: personnel, options: { fontFace: 'メイリオ' } }],
+                [{ text: '販売促進費計', options: { fontFace: 'メイリオ' } }, { text: promotion, options: { fontFace: 'メイリオ' } }],
+                [{ text: '設備費計', options: { fontFace: 'メイリオ' } }, { text: equipmentCost, options: { fontFace: 'メイリオ' } }],
+                [{ text: 'うち減価償却費', options: { fontFace: 'メイリオ' } }, { text: annualDepreciation, options: { fontFace: 'メイリオ' } }],
+                [{ text: '販売費一般管理費合計', options: { fontFace: 'メイリオ' } }, { text: totalSGA, options: { fontFace: 'メイリオ' } }],
+                [{ text: '営業利益', options: { fontFace: 'メイリオ' } }, { text: operatingProfit, options: { fontFace: 'メイリオ' } }],
+                [{ text: '税金概算（40％）', options: { fontFace: 'メイリオ' } }, { text: tax, options: { fontFace: 'メイリオ' } }],
+                [{ text: '税引後純利益', options: { fontFace: 'メイリオ' } }, { text: netIncome, options: { fontFace: 'メイリオ' } }],
+                [{ text: 'キャッシュフロー', options: { fontFace: 'メイリオ' } }, { text: cashFlow, options: { fontFace: 'メイリオ' } }],
+                [{ text: '投資回収期間（ヶ月）', options: { fontFace: 'メイリオ' } }, { text: paybackPeriod, options: { fontFace: 'メイリオ' } }]
             ];
 
-            const opts = {
-                x: 1,
-                y: 0.8,
-                w: '80%',
-                colW: [2.54, 5],
-                border: { pt: '1', color: 'FFFFFF' },
-                fill: 'FFFFFF',
-                fillStyles: [{ type: 'solid', color: 'F2F2F2' }, { type: 'solid', color: 'FFFFFF' }],
-                fontSize: 14
-            };
+            slide.addTable(tableData, { x: 0.5, y: 1.5, w: 8.5, border: { pt: 1, color: '000000' }, fontFace: 'メイリオ'  });
 
-            slide.addTable(tableData, opts);
-
-            const filePath = path.join(__dirname, 'output.pptx');
-            pptx.writeFile(filePath)
-                .then(() => {
-                    res.download(filePath, 'output.pptx', (err) => {
-                        if (err) {
-                            console.error('エクスポート中にエラーが発生しました:', err);
-                            res.status(500).send('エクスポート中にエラーが発生しました');
-                        } else {
-                            fs.unlink(filePath, (unlinkErr) => {
-                                if (unlinkErr) {
-                                    console.error('一時ファイルの削除中にエラーが発生しました:', unlinkErr);
-                                }
-                            });
-                        }
-                    });
-                })
-                .catch((err) => {
-                    console.error('PPTXの生成中にエラーが発生しました:', err);
-                    res.status(500).send('PPTXの生成中にエラーが発生しました');
-                });
-
+            pptx.writeFile('投資回収シミュレーション.pptx');
         });
     </script>
 </body>

@@ -1,21 +1,21 @@
 // PPTエクスポート機能
 document.getElementById('export-ppt-button').addEventListener('click', function(e) {
     e.preventDefault();
-    
+
     // 各フィールドからデータを取得
     const sales = document.getElementById('sales').textContent;
-    const costofsales = document.getElementById('cost-of-sales').textContent;
-    const grossprofit = document.getElementById('gross-profit').textContent;
+    const costOfSales = document.getElementById('cost-of-sales').textContent;
+    const grossProfit = document.getElementById('gross-profit').textContent;
     const personnel = document.getElementById('total-personnel').textContent;
     const promotion = document.getElementById('total-promotion').textContent;
-    const equipmentcost = document.getElementById('total-equipment-cost').textContent;
-    const annualdepreciation = document.getElementById('annual-depreciation').textContent;
-    const totalsga = document.getElementById('total-sga').textContent;
-    const operatingprofit = document.getElementById('operating-profit').textContent;
+    const equipmentCost = document.getElementById('total-equipment-cost').textContent;
+    const annualDepreciation = document.getElementById('annual-depreciation').textContent;
+    const totalSGA = document.getElementById('total-sga').textContent;
+    const operatingProfit = document.getElementById('operating-profit').textContent;
     const tax = document.getElementById('tax').textContent;
-    const netincome = document.getElementById('net-income').textContent;
-    const cashflow = document.getElementById('cash-flow').textContent;
-    const paybackperiod = document.getElementById('payback-period').textContent;
+    const netIncome = document.getElementById('net-income').textContent;
+    const cashFlow = document.getElementById('cash-flow').textContent;
+    const paybackPeriod = document.getElementById('payback-period').textContent;
 
     // PPTXの生成
     let pptx = new PptxGenJS();
@@ -42,7 +42,7 @@ document.getElementById('export-ppt-button').addEventListener('click', function(
 
     const opts = {
         x: 1,
-        y: 0.8,
+        y: 1.5,
         w: '80%',
         colW: [2.54, 5],
         border: { pt: '1', color: 'FFFFFF' },

@@ -1,6 +1,13 @@
 // 投資・物件条件のデータ保存・読み込み
 function saveFormData() {
+    const propertyName = document.getElementById('property-name').value;
+    if (!propertyName) {
+        alert("物件名を入力してください");
+        return;
+    }
+
     const data = {
+        propertyName,
         depreciation: document.getElementById('depreciation').value,
         rent: document.getElementById('rent').value,
         area: document.getElementById('area').value,
@@ -12,12 +19,18 @@ function saveFormData() {
         annualSales: document.getElementById('annual-sales').value,
         grossMarginRate: document.getElementById('gross-margin-rate').value
     };
-    localStorage.setItem('formData', JSON.stringify(data));
+
+    let allData = JSON.parse(localStorage.getItem('allData')) || {};
+    allData[propertyName] = data;
+    localStorage.setItem('allData', JSON.stringify(allData));
+    alert("データを保存しました");
 }
 
-function loadFormData() {
-    const data = JSON.parse(localStorage.getItem('formData'));
-    if (data) {
+function loadFormData(propertyName) {
+    const allData = JSON.parse(localStorage.getItem('allData'));
+    if (allData && allData[propertyName]) {
+        const data = allData[propertyName];
+        document.getElementById('property-name').value = data.propertyName || '';
         document.getElementById('depreciation').value = data.depreciation || '';
         document.getElementById('rent').value = data.rent || '';
         document.getElementById('area').value = data.area || '';
@@ -28,10 +41,19 @@ function loadFormData() {
         document.getElementById('general').value = data.general || '';
         document.getElementById('annual-sales').value = data.annualSales || '';
         document.getElementById('gross-margin-rate').value = data.grossMarginRate || '';
+    } else {
+        alert("データが見つかりません");
     }
 }
 
-// 設備投資のデータ保存・読み込み
+function searchData() {
+    const propertyName = prompt("検索する物件名を入力してください");
+    if (propertyName) {
+        loadFormData(propertyName);
+    }
+}
+
+// 既存の設備投資のデータ保存・読み込み関数
 function saveInvestmentData() {
     const investmentData = {
         interior: document.getElementById('interior').value,
@@ -112,73 +134,21 @@ function calculateTotal() {
     const application = parseFloat(document.getElementById('application').value) || 0;
     const constructionCost = parseFloat(document.getElementById('construction-cost').value) || 0;
 
-    const totalInvestment = interior + fixtures + lighting + design + system + construction + common + cooperation + management +
-                            promotion + extinguisher + phone + register + restoration + deposit + store + assistance + preOpening +
-                            recruitment + flyers + application + constructionCost;
-
-    document.getElementById('total-investment').textContent = totalInvestment.toLocaleString();
-    localStorage.setItem('totalInvestment', totalInvestment);
+    const total = interior + fixtures + lighting + design + system + construction + common + cooperation + management + promotion + extinguisher + phone + register + restoration + deposit + store + assistance + preOpening + recruitment + flyers + application + constructionCost;
+    
+    document.getElementById('total').innerText = `合計: ${total.toLocaleString()}円`;
 }
 
-function saveAndReturn() {
+// ページ読み込み時にデータを読み込む
+window.onload = function() {
+    loadFormData();
+    loadInvestmentData();
     calculateTotal();
-    saveInvestmentData();
-    window.location.href = 'index.html';
-}
+};
 
-// index.htmlからの呼び出し
-function calculate() {
-    const totalInvestment = parseFloat(localStorage.getItem('totalInvestment')) || 0;
-    document.getElementById('total-investment-input').textContent = totalInvestment.toLocaleString();
-
-    // 投資・物件条件の入力値を取得
-    const rent = parseFloat(document.getElementById('rent').value) || 0;
-    const area = parseFloat(document.getElementById('area').value) || 0;
-    const duration = parseFloat(document.getElementById('duration').value) || 0;
-    const depreciation = parseFloat(document.getElementById('depreciation').value) || 0;
-    const personnel = parseFloat(document.getElementById('personnel').value) || 0;
-    const promotion = parseFloat(document.getElementById('promotion').value) || 0;
-    const equipmentCost = parseFloat(document.getElementById('equipment-cost').value) || 0;
-    const general = parseFloat(document.getElementById('general').value) || 0;
-    const annualSales = parseFloat(document.getElementById('annual-sales').value) || 0;
-    const grossMarginRate = parseFloat(document.getElementById('gross-margin-rate').value) || 0;
-
-    // 年間の月間運営費用を算出
-    const annualPersonnel = personnel * 12;
-    const annualPromotion = promotion * 12;
-    const annualEquipmentCost = equipmentCost * 12;
-    const annualOperatingCosts = annualPersonnel + annualPromotion + annualEquipmentCost + general * 12;
-
-    // 売上原価の計算
-    const purchaseCost = annualSales * ((100 - grossMarginRate) / 100);
-    const costOfSales = purchaseCost;
-
-    // 投資回収シミュレーションの計算
-    const sales = annualSales;  // 1. 売上高
-    const grossProfit = sales - costOfSales;  // 3. 売上総利益
-    const totalPersonnel = annualPersonnel;  // 4. 人件費計
-    const totalPromotion = annualPromotion;  // 5. 販売促進費計
-    const totalEquipmentCost = annualEquipmentCost;  // 6. 設備費計
-    const annualDepreciation = totalInvestment / depreciation;  // 7. うち減価償却費
-    const totalSGA = annualOperatingCosts + annualDepreciation;  // 8. 販売費一般管理費合計
-    const operatingProfit = grossProfit - totalSGA;  // 9. 営業利益
-    const tax = operatingProfit * 0.4;  // 10. 税金概算（40％）
-    const netIncome = operatingProfit - tax;  // 11. 税引後純利益
-    const cashFlow = netIncome + annualDepreciation;  // 12. 営業キャッシュフロー
-    const paybackPeriod = totalInvestment / (cashFlow / 12);  // 13. 投資回収期間（ヶ月）
-
-    // 結果をHTMLに表示
-    document.getElementById('sales').textContent = sales.toLocaleString();
-    document.getElementById('cost-of-sales').textContent = costOfSales.toLocaleString();
-    document.getElementById('gross-profit').textContent = grossProfit.toLocaleString();
-    document.getElementById('total-personnel').textContent = totalPersonnel.toLocaleString();
-    document.getElementById('total-promotion').textContent = totalPromotion.toLocaleString();
-    document.getElementById('total-equipment-cost').textContent = totalEquipmentCost.toLocaleString();
-    document.getElementById('annual-depreciation').textContent = annualDepreciation.toLocaleString();
-    document.getElementById('total-sga').textContent = totalSGA.toLocaleString();
-    document.getElementById('operating-profit').textContent = operatingProfit.toLocaleString();
-    document.getElementById('tax').textContent = tax.toLocaleString();
-    document.getElementById('net-income').textContent = netIncome.toLocaleString();
-    document.getElementById('cash-flow').textContent = cashFlow.toLocaleString();
-    document.getElementById('payback-period').textContent = paybackPeriod.toFixed(2);
-}
+// データ保存・読み込み・計算関数の呼び出し
+document.getElementById('saveFormDataButton').onclick = saveFormData;
+document.getElementById('loadFormDataButton').onclick = loadFormData;
+document.getElementById('calculateButton').onclick = calculateTotal;
+document.getElementById('saveInvestmentDataButton').onclick = saveInvestmentData;
+document.getElementById('loadInvestmentDataButton').onclick = loadInvestmentData;

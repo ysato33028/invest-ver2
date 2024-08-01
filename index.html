@@ -21,6 +21,15 @@
                 </div>
             </div>
             <div class="form-section">
+                <div class="section-title">物件情報
+                <btn-s onclick="searchData()"><p>物件検索</p></btn-s>
+                </div>
+                <div class="form-group">
+                    <label for="property-name">物件名:</label>
+                    <input type="text" id="property-name" placeholder="物件名を入力">
+                </div>
+            </div>
+            <div class="form-section">
                 <div class="section-title">減価償却費</div>
                 <div class="form-group">
                     <label for="depreciation">償却月数:</label>
@@ -143,6 +152,7 @@
             </div>
         </div>
     </div>
+    <button onclick="saveData()">データを保存</button>
     <button onclick="calculate()">計算する</button>
     <script src="app.js"></script>
     <script>

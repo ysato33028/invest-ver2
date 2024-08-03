@@ -168,17 +168,17 @@ function calculate() {
     const paybackPeriod = totalInvestment / (cashFlow / 12);  // 13. 投資回収期間（ヶ月）
 
     // 結果をHTMLに表示
-    document.getElementById('sales').textContent = sales.toLocaleString();
-    document.getElementById('cost-of-sales').textContent = costOfSales.toLocaleString();
-    document.getElementById('gross-profit').textContent = grossProfit.toLocaleString();
-    document.getElementById('total-personnel').textContent = totalPersonnel.toLocaleString();
-    document.getElementById('total-promotion').textContent = totalPromotion.toLocaleString();
-    document.getElementById('total-equipment-cost').textContent = totalEquipmentCost.toLocaleString();
-    document.getElementById('annual-depreciation').textContent = annualDepreciation.toLocaleString();
-    document.getElementById('total-sga').textContent = totalSGA.toLocaleString();
-    document.getElementById('operating-profit').textContent = operatingProfit.toLocaleString();
-    document.getElementById('tax').textContent = tax.toLocaleString();
-    document.getElementById('net-income').textContent = netIncome.toLocaleString();
-    document.getElementById('cash-flow').textContent = cashFlow.toLocaleString();
+    document.getElementById('sales').textContent = Math.trunc(sales).toLocaleString();
+    document.getElementById('cost-of-sales').textContent = Math.trunc(costOfSales).toLocaleString();
+    document.getElementById('gross-profit').textContent = Math.trunc(grossProfit).toLocaleString();
+    document.getElementById('total-personnel').textContent = Math.trunc(totalPersonnel).toLocaleString();
+    document.getElementById('total-promotion').textContent = Math.trunc(totalPromotion).toLocaleString();
+    document.getElementById('total-equipment-cost').textContent = Math.trunc(totalEquipmentCost).toLocaleString();
+    document.getElementById('annual-depreciation').textContent = Math.trunc(annualDepreciation).toLocaleString();
+    document.getElementById('total-sga').textContent = Math.trunc(totalSGA).toLocaleString();
+    document.getElementById('operating-profit').textContent = Math.trunc(operatingProfit).toLocaleString();
+    document.getElementById('tax').textContent = Math.trunc(tax).toLocaleString();
+    document.getElementById('net-income').textContent = Math.trunc(netIncome).toLocaleString();
+    document.getElementById('cash-flow').textContent = Math.trunc(cashFlow).toLocaleString();
     document.getElementById('payback-period').textContent = paybackPeriod.toFixed(2);
 }

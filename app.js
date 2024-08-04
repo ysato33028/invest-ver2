@@ -159,7 +159,7 @@ function calculate() {
     const totalPersonnel = annualPersonnel;  // 4. 人件費計
     const totalPromotion = annualPromotion;  // 5. 販売促進費計
     const totalEquipmentCost = annualEquipmentCost;  // 6. 設備費計
-    const annualDepreciation = totalInvestment / depreciation;  // 7. うち減価償却費
+    const annualDepreciation = totalInvestment / depreciation * 12;  // 7. うち減価償却費
     const totalSGA = annualOperatingCosts + annualDepreciation;  // 8. 販売費一般管理費合計
     const operatingProfit = grossProfit - totalSGA;  // 9. 営業利益
     const tax = operatingProfit * 0.4;  // 10. 税金概算（40％）

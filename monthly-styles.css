@@ -1,0 +1,113 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    background-color: #454545; /* 背景色をダークグレーに変更 */
+}
+
+.container {
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    background-color: #2ABCA7; /* タイトル背景色をターコイズに変更 */
+    padding: 18px 0;
+    font-size: 1.4em;
+    color: #FAFAFA; /* タイトルテキストカラーを白に設定 */
+    border-radius: 6px 6px 0 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 1;
+    min-width: 50px;
+    margin: 10px;
+    text-align: center;
+}
+
+.column label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.column input {
+    width: 80%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+td {
+    background-color: #fff;
+    color: #333;
+}
+
+tr:nth-child(even) td {
+    background-color: #f5f5f5;
+}
+
+thead th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.container .column input {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.container .column input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}

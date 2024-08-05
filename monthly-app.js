@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
         cashFlow: cashFlow,
     };
 
+    const totalInvestment = parseFloat(localStorage.getItem('totalInvestment')) || 0;
+
     // 数値に変換するための関数
     function parseNumber(value) {
         return isNaN(parseFloat(value)) ? 0 : parseFloat(value);
@@ -63,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const monthlyValues = calculateMonthlyValues(factors);
+        let investmentBalance = -totalInvestment;
 
         for (let i = 0; i < 12; i++) {
             document.getElementById(`sales-${i+1}`).textContent = Math.ceil(monthlyValues[i].sales).toLocaleString();
@@ -77,6 +80,17 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById(`tax-${i+1}`).textContent = Math.ceil(monthlyValues[i].tax).toLocaleString();
             document.getElementById(`net-profit-${i+1}`).textContent = Math.ceil(monthlyValues[i].netProfit).toLocaleString();
             document.getElementById(`cash-flow-${i+1}`).textContent = Math.ceil(monthlyValues[i].cashFlow).toLocaleString();
+
+            investmentBalance += Math.ceil(monthlyValues[i].cashFlow);
+            
+            const investmentBalanceElement = document.getElementById(`investment-balance-${i + 1}`);
+            if (investmentBalance < 0) {
+                investmentBalanceElement.textContent = '▲' + Math.abs(investmentBalance).toLocaleString();
+                investmentBalanceElement.classList.add('negative-balance');
+            } else {
+                investmentBalanceElement.textContent = investmentBalance.toLocaleString();
+                investmentBalanceElement.classList.remove('negative-balance');
+            }
         }
     }
 

@@ -209,6 +209,7 @@ function calculate() {
         localStorage.setItem('netIncome', netincome);
         const cashflow = cashFlow;
         localStorage.setItem('cashFlow', cashflow);
+        localStorage.setItem('totalInvestment', totalInvestment);
 
         // 月度別のページにリダイレクト
         window.location.href = 'monthly-calculations.html';

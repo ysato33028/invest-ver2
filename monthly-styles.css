@@ -111,3 +111,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .table-wrapper {
     overflow-x: auto;
 }
+/* 投資回収残高がマイナスの場合は赤字表記 */
+.negative-balance {
+        color: red;
+}

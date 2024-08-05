@@ -18,6 +18,7 @@ function saveFormData() {
 function loadFormData() {
     const data = JSON.parse(localStorage.getItem('formData'));
     if (data) {
+        console.log(data); // デバッグ用のログ
         document.getElementById('depreciation').value = data.depreciation || '';
         document.getElementById('rent').value = data.rent || '';
         document.getElementById('area').value = data.area || '';
@@ -181,4 +182,35 @@ function calculate() {
     document.getElementById('net-income').textContent = Math.trunc(netIncome).toLocaleString();
     document.getElementById('cash-flow').textContent = Math.trunc(cashFlow).toLocaleString();
     document.getElementById('payback-period').textContent = paybackPeriod.toFixed(2);
+
+    // 計算結果を保存
+    document.getElementById('calculate-btn').addEventListener('click', function() {
+        const sales = annualSales;
+        localStorage.setItem('annualSales', sales);
+        const cost = costOfSales;
+        localStorage.setItem('costOfSales', cost);
+        const gross = grossProfit;
+        localStorage.setItem('grossProfit', gross);
+        const personnel = annualPersonnel;
+        localStorage.setItem('personnel', personnel);
+        const promotion = annualPromotion;
+        localStorage.setItem('promotion', promotion);
+        const equipmentCost = annualEquipmentCost;
+        localStorage.setItem('equipmentCost', equipmentCost);
+        const depreciation = annualDepreciation;
+        localStorage.setItem('depreciation', depreciation);
+        const general = totalSGA;
+        localStorage.setItem('general', general);
+        const operating = operatingProfit;
+        localStorage.setItem('operatingProfit', operating);
+        const taxmargin = tax;
+        localStorage.setItem('tax', taxmargin);
+        const netincome = netIncome;
+        localStorage.setItem('netIncome', netincome);
+        const cashflow = cashFlow;
+        localStorage.setItem('cashFlow', cashflow);
+
+        // 月度別のページにリダイレクト
+        window.location.href = 'monthly-calculations.html';
+    });
 }

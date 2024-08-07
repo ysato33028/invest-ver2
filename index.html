@@ -12,12 +12,32 @@
         <div class="column">
             <h2>投資・物件条件</h2>
             <div class="form-section">
+                <div class="section-title">物件検索
+                    <btn-s id="showModal" class="button"><p>一覧</p></btn-s>
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2>登録した物件一覧</h2>
+                                <ul id="propertyList">
+                                    <!-- 物件リストがここに表示されます -->
+                                        
+                                </ul>
+                            </div>
+                        </div>
+                </div>
+                <form id="property-search-form">
+                    <input id="property-search-input" name="s" type="text" placeholder="物件名を入力" />
+                    <input id="property-search-button" type="submit" value="検索" />
+                </form>
+                <div id="search-results"></div> <!-- 検索結果表示エリア -->
+            </div>
+            <div class="form-section">
               <div class="section-title">設備投資
                  <btn-s onclick="location.href='investment-input.html'"><p>入力!</p></btn-s>
               </div>
                 <div class="form-group">
                     <label for="total-investment-input">設備投資合計:</label>
-                    <span id="total-investment-input">0</span>
+                    <input type="text" id="total-investment-input" value="0" disabled>
                 </div>
             </div>
             <div class="form-section">
@@ -141,19 +161,52 @@
                 <div class="form-group">
                     <button id="export-ppt-button" class="input-button">PPTエクスポート</button>
                 </div>
-                <script src="script.js"></script>
+                <div class="form-section">
+                    <button id="register-property-button" class="registration-button">物件登録</button>
+                </div>
             </div>
         </div>
     </div>
     <button onclick="calculate()">計算する</button>
+    <script src="script.js"></script>
     <script src="app.js"></script>
     <script>
-        // ページ読み込み時にフォームデータを読み込む
-        window.onload = function() {
-            loadFormData();
-            const totalInvestment = parseFloat(localStorage.getItem('totalInvestment')) || 0;
-            document.getElementById('total-investment-input').textContent = totalInvestment.toLocaleString();
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            // モーダルを表示するボタン
+            const showModalButton = document.getElementById('showModal');
+            const modal = document.getElementById('myModal');
+            const closeModalButton = modal.querySelector('.close');
+            const propertyList = document.getElementById('propertyList');
+
+            // 物件情報をローカルストレージから取得
+            function getProperties() {
+                const properties = JSON.parse(localStorage.getItem('properties')) || [];
+                propertyList.innerHTML = '';
+                properties.forEach(property => {
+                    const li = document.createElement('li');
+                    li.textContent = property.name;
+                    propertyList.appendChild(li);
+                });
+            }
+
+            // モーダルを表示する
+            showModalButton.addEventListener('click', function() {
+                getProperties();
+                modal.style.display = 'block';
+            });
+
+            // モーダルを閉じる
+            closeModalButton.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            // モーダル外をクリックしたら閉じる
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
     </script>
 </body>
 </html>

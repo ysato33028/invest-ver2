@@ -263,3 +263,69 @@ btn-s:hover {
     transform:scale(1);
   }
 }
+
+/* アコーディオンUI */
+details {
+  --arrow-size: 8px;
+  --anime-speed: 0.6s;
+}
+
+details summary {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  font-weight: 700;
+  padding: 1.5em calc(var(--arrow-size) + 3em) 1.5em 3.5em;
+  cursor: pointer;
+  color: #FFF;
+  background: linear-gradient(270deg, #bf35ff 0%, #ee35ff 25%, #ff35b8 51%, #ff357f 100%);
+}
+
+details summary::-webkit-details-marker {
+  /* iOSで表示されるデフォルトの三角形アイコンを消す */
+  display: none;
+}
+
+details summary::before {
+  position: absolute;
+  top: 1.5em;
+  left: 1.5em;
+  color: #454545;
+}
+
+/* ※本来はafter要素の装飾で十分だが、iOSだと疑似要素に「transition」が効かないので、通常のタグを装飾 */
+details summary .ico {
+  position: absolute;
+  top: 0;
+  right: 1.5em;
+  bottom: 0;
+  display: block;
+  width: var(--arrow-size);
+  height: calc(var(--arrow-size) * 0.6);
+  /*aspect-ratio: 1/0.6;*/
+  /* ※追記 Windows版Chrome124にてaspect-ratioを指定した要素と、position: absoluteの位置調整の組み合わせに不具合が発生したため、height値をcalcの計算に切り替え */
+  margin: auto;
+  background: #FFF;
+  clip-path: polygon(100% 13%, 50% 100%, 0 13%, 8% 0, 50% 73%, 92% 0);
+  transition: transform var(--anime-speed);
+}
+
+details[open] summary .ico {
+  transform: rotate(180deg);
+}
+
+details .inner {
+  position: relative;
+  padding: 1.5em 1.5em 1.5em 1.5em;
+  background: #FFF;
+  color: #454545;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+}
+
+details .inner::before {
+  position: absolute;
+  top: 1.5em;
+  left: 1.5em;
+  font-weight: 700;
+}

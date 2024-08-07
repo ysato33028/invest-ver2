@@ -277,8 +277,8 @@ details summary {
   font-weight: 700;
   padding: 1.5em calc(var(--arrow-size) + 3em) 1.5em 3.5em;
   cursor: pointer;
-  color: #FFF;
-  background: linear-gradient(270deg, #bf35ff 0%, #ee35ff 25%, #ff35b8 51%, #ff357f 100%);
+  color: #454545;
+  background: #e0e0e0;
 }
 
 details summary::-webkit-details-marker {
@@ -305,7 +305,7 @@ details summary .ico {
   /*aspect-ratio: 1/0.6;*/
   /* ※追記 Windows版Chrome124にてaspect-ratioを指定した要素と、position: absoluteの位置調整の組み合わせに不具合が発生したため、height値をcalcの計算に切り替え */
   margin: auto;
-  background: #FFF;
+  background: #454545;
   clip-path: polygon(100% 13%, 50% 100%, 0 13%, 8% 0, 50% 73%, 92% 0);
   transition: transform var(--anime-speed);
 }

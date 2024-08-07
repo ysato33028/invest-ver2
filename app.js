@@ -44,7 +44,7 @@ function saveInvestmentData() {
         common: document.getElementById('common').value,
         cooperation: document.getElementById('cooperation').value,
         management: document.getElementById('management').value,
-        promotion: document.getElementById('promotion').value,
+        promotion: document.getElementById('open-promotion').value,
         extinguisher: document.getElementById('extinguisher').value,
         phone: document.getElementById('phone').value,
         register: document.getElementById('register').value,
@@ -73,7 +73,7 @@ function loadInvestmentData() {
         document.getElementById('common').value = investmentData.common || '';
         document.getElementById('cooperation').value = investmentData.cooperation || '';
         document.getElementById('management').value = investmentData.management || '';
-        document.getElementById('promotion').value = investmentData.promotion || '';
+        document.getElementById('open-promotion').value = investmentData.promotion || '';
         document.getElementById('extinguisher').value = investmentData.extinguisher || '';
         document.getElementById('phone').value = investmentData.phone || '';
         document.getElementById('register').value = investmentData.register || '';
@@ -99,7 +99,7 @@ function calculateTotal() {
     const common = parseFloat(document.getElementById('common').value) || 0;
     const cooperation = parseFloat(document.getElementById('cooperation').value) || 0;
     const management = parseFloat(document.getElementById('management').value) || 0;
-    const promotion = parseFloat(document.getElementById('promotion').value) || 0;
+    const promotion = parseFloat(document.getElementById('open-promotion').value) || 0;
     const extinguisher = parseFloat(document.getElementById('extinguisher').value) || 0;
     const phone = parseFloat(document.getElementById('phone').value) || 0;
     const register = parseFloat(document.getElementById('register').value) || 0;
@@ -130,7 +130,7 @@ function saveAndReturn() {
 // index.htmlからの呼び出し
 function calculate() {
     const totalInvestment = parseFloat(localStorage.getItem('totalInvestment')) || 0;
-    document.getElementById('total-investment-input').textContent = totalInvestment.toLocaleString();
+    document.getElementById('total-investment-input').value = totalInvestment.toLocaleString();
 
     // 投資・物件条件の入力値を取得
     const rent = parseFloat(document.getElementById('rent').value) || 0;
@@ -215,3 +215,156 @@ function calculate() {
         window.location.href = 'monthly-calculations.html';
     });
 }
+
+// 物件登録ボタンのクリックイベント
+document.getElementById('register-property-button').addEventListener('click', function() {
+    let propertyName = prompt("物件名を入力してください:");
+    if (propertyName) {
+        // 物件情報をローカルストレージに保存
+        let properties = JSON.parse(localStorage.getItem('properties')) || [];
+        let propertyData = gatherPropertyData();
+        console.log("Property Data to Save:", propertyData); // 保存するデータをログに出力
+
+        // 既存の物件名をチェック
+        let existingIndex = properties.findIndex(p => p.name === propertyName);
+        if (existingIndex !== -1) {
+            // 既存物件名がある場合、更新確認ポップアップを表示
+            let confirmUpdate = confirm("その物件名は登録済みです。更新しますか？");
+            if (confirmUpdate) {
+                properties[existingIndex].data = propertyData; // 既存データを更新
+                localStorage.setItem('properties', JSON.stringify(properties));
+                alert("物件が更新されました。");
+            } else {
+                alert("物件の登録を中止しました。");
+            }
+        } else {
+            // 新規物件名の場合、追加
+            properties.push({ name: propertyName, data: propertyData });
+            localStorage.setItem('properties', JSON.stringify(properties));
+            alert("物件が登録されました。");
+        }
+    }
+});
+
+
+// 物件検索フォームのsubmitイベント
+document.getElementById('property-search-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // フォームのデフォルト動作を無効化
+    let propertyName = document.getElementById('property-search-input').value;
+    let properties = JSON.parse(localStorage.getItem('properties')) || [];
+    let property = properties.find(p => p.name === propertyName);
+
+    // 検索結果を表示するエリアをクリア
+    const searchResults = document.getElementById('search-results');
+    searchResults.innerHTML = '';
+
+    if (!property) {
+        alert("この物件名での登録はありません");
+    } else {
+        if (confirm("この物件のデータを反映しますか？")) {
+            // データを反映する処理
+            loadPropertyData(property.data);
+        }
+
+        // 削除ボタンを追加する
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '削除';
+        deleteButton.addEventListener('click', function() {
+            deleteProperty(propertyName);
+        });
+
+        // 検索結果に削除ボタンを追加
+        searchResults.appendChild(deleteButton);
+    }
+});
+
+// 物件を削除する関数
+function deleteProperty(propertyName) {
+    let properties = JSON.parse(localStorage.getItem('properties')) || [];
+    properties = properties.filter(p => p.name !== propertyName);
+    localStorage.setItem('properties', JSON.stringify(properties));
+    alert("物件が削除されました。");
+
+    // 削除後に検索結果をクリア
+    document.getElementById('search-results').innerHTML = '';
+}
+
+// フォームデータを収集してオブジェクトにまとめる関数
+function gatherPropertyData() {
+    const data = {
+        rent: document.getElementById('rent').value,
+        area: document.getElementById('area').value,
+        duration: document.getElementById('duration').value,
+        depreciation: document.getElementById('depreciation').value,
+        personnel: document.getElementById('personnel').value,
+        promotion: document.getElementById('promotion').value,
+        equipmentCost: document.getElementById('equipment-cost').value,
+        general: document.getElementById('general').value,
+        annualSales: document.getElementById('annual-sales').value,
+        grossMarginRate: document.getElementById('gross-margin-rate').value,
+        sales: document.getElementById('sales').textContent.replace(/,/g, ''),
+        costOfSales: document.getElementById('cost-of-sales').textContent.replace(/,/g, ''),
+        grossProfit: document.getElementById('gross-profit').textContent.replace(/,/g, ''),
+        totalPersonnel: document.getElementById('total-personnel').textContent.replace(/,/g, ''),
+        totalPromotion: document.getElementById('total-promotion').textContent.replace(/,/g, ''),
+        totalEquipmentCost: document.getElementById('total-equipment-cost').textContent.replace(/,/g, ''),
+        annualDepreciation: document.getElementById('annual-depreciation').textContent.replace(/,/g, ''),
+        totalSGA: document.getElementById('total-sga').textContent.replace(/,/g, ''),
+        operatingProfit: document.getElementById('operating-profit').textContent.replace(/,/g, ''),
+        tax: document.getElementById('tax').textContent.replace(/,/g, ''),
+        netIncome: document.getElementById('net-income').textContent.replace(/,/g, ''),
+        cashFlow: document.getElementById('cash-flow').textContent.replace(/,/g, ''),
+        paybackPeriod: document.getElementById('payback-period').textContent.replace(/,/g, ''),
+        totalInvestment: document.getElementById('total-investment-input').value.replace(/,/g, '') // 追加
+    };
+    console.log("Gathered Property Data:", data); // データをログに出力
+    return data;
+}
+
+function loadPropertyData(data) {
+    try {
+        // 投資・物件条件の入力値を設定
+        document.getElementById('rent').value = data.rent || '';
+        document.getElementById('area').value = data.area || '';
+        document.getElementById('duration').value = data.duration || '';
+        document.getElementById('depreciation').value = data.depreciation || '';
+        document.getElementById('personnel').value = data.personnel || '';
+        document.getElementById('promotion').value = data.promotion || '';
+        document.getElementById('equipment-cost').value = data.equipmentCost || '';
+        document.getElementById('general').value = data.general || '';
+        document.getElementById('annual-sales').value = data.annualSales || '';
+        document.getElementById('gross-margin-rate').value = data.grossMarginRate || '';
+        
+        // 投資回収シミュレーション結果
+        document.getElementById('sales').textContent = data.sales || '';
+        document.getElementById('cost-of-sales').textContent = data.costOfSales || '';
+        document.getElementById('gross-profit').textContent = data.grossProfit || '';
+        document.getElementById('total-personnel').textContent = data.totalPersonnel || '';
+        document.getElementById('total-promotion').textContent = data.totalPromotion || '';
+        document.getElementById('total-equipment-cost').textContent = data.totalEquipmentCost || '';
+        document.getElementById('annual-depreciation').textContent = data.annualDepreciation || '';
+        document.getElementById('total-sga').textContent = data.totalSGA || '';
+        document.getElementById('operating-profit').textContent = data.operatingProfit || '';
+        document.getElementById('tax').textContent = data.tax || '';
+        document.getElementById('net-income').textContent = data.netIncome || '';
+        document.getElementById('cash-flow').textContent = data.cashFlow || '';
+        document.getElementById('payback-period').textContent = data.paybackPeriod || '';
+
+        // 設備投資合計の値を設定
+        document.getElementById('total-investment-input').value = data.totalInvestment || '';
+
+    } catch (error) {
+        console.error("Error loading property data: ", error);
+    }
+}
+
+// ページ読み込み時にフォームデータを読み込む
+window.onload = function() {
+    loadFormData();
+    const totalInvestment = parseFloat(localStorage.getItem('totalInvestment')) || 0;
+    document.getElementById('total-investment-input').value = totalInvestment.toLocaleString();
+
+    let properties = JSON.parse(localStorage.getItem('properties')) || [];
+    console.log("Stored Properties:", properties); // 保存されたデータをログに出力
+    // 他の初期化コード
+};

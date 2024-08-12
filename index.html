@@ -95,13 +95,48 @@
                 </div>
                 <div class="form-group">
                     <label for="gross-margin-rate">荒利率（％）:</label>
-                    <input type="number" id="gross-margin-rate" value="45.1" oninput="saveFormData()">
+                    <input type="number" id="gross-margin-rate" value="45" oninput="saveFormData()">
                 </div>
+            </div>
+            <div class="form-section">
+                <div class="section-title">各年の入力</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>年次</th>
+                            <th>売上伸び率（％）</th>
+                            <th>荒利率（％）</th>
+                        </tr>
+                    </thead>
+                    <tbody id="yearly-inputs">
+                        <!-- JavaScriptで年次入力行を動的に生成 -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <div class="column">
             <h2>投資回収シミュレーション</h2>
+            <div class="form-section">
+                <div class="section-title">シミュレーション結果</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>年次</th>
+                            <th>売上高</th>
+                            <th>売上総利益</th>
+                            <th>営業利益</th>
+                            <th>税引後純利益</th>
+                        </tr>
+                    </thead>
+                    <tbody id="simulation-results">
+                        <!-- JavaScriptでシミュレーション結果を動的に生成 -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <button onclick="calculate6YearSimulation()">シミュレーション開始</button>
+            </div>
             <div class="form-section">
                 <div class="section-title">勘定項目
                     <btn-s id="calculate-btn"><p>月度別</p></btn-s>
@@ -159,7 +194,7 @@
                     <span id="payback-period">0</span>
                 </div>
                 <div class="form-group">
-                    <button id="export-ppt-button" class="input-button">PPTエクスポート</button>
+                    <button onclick="calculate()">計算する</button>
                 </div>
                 <div class="form-group">
                     <button id="register-property-button" class="registration-button">物件登録</button>
@@ -183,7 +218,7 @@
                 </div>
             </div>
         </div>
-    <button onclick="calculate()">計算する</button>
+    <button id="export-ppt-button" class="input-button">PPTエクスポート</button>
     <script src="script.js"></script>
     <script src="app.js"></script>
     <script>

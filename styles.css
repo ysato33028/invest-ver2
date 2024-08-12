@@ -329,3 +329,26 @@ details .inner::before {
   left: 1.5em;
   font-weight: 700;
 }
+
+/*6年分のシミュレーション表*/
+table {
+  display: block;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 95%;
+  overflow: auto;
+  width: auto;
+  
+  th {
+    background-color: #2ABCA7;
+    color: white;
+    font-weight: normal;
+    padding: 10px 20px;
+    text-align: center;
+  }
+  td {
+    background-color: #eee;
+    color: rgb(111, 111, 111);
+    padding: 10px 20px;
+  }
+}

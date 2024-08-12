@@ -13,6 +13,22 @@ function saveFormData() {
         grossMarginRate: document.getElementById('gross-margin-rate').value
     };
     localStorage.setItem('formData', JSON.stringify(data));
+
+    //　6年分の売上シミュレーション
+    const sixdata = {
+        annualSales: document.getElementById('annual-sales').value,
+        grossMarginRate: document.getElementById('gross-margin-rate').value,
+        yearlyInputs: []
+    };
+
+    // 6年間の入力データを保存
+    for (let i = 1; i <= 6; i++) {
+        const growthRate = document.getElementById(`sales-growth-year-${i}`).value;
+        const grossMarginRate = document.getElementById(`gross-margin-year-${i}`).value;
+        sixdata.yearlyInputs.push({ growthRate, grossMarginRate });
+    }
+
+    localStorage.setItem('formSixData', JSON.stringify(sixdata));
 }
 
 function loadFormData() {
@@ -29,6 +45,17 @@ function loadFormData() {
         document.getElementById('general').value = data.general || '';
         document.getElementById('annual-sales').value = data.annualSales || '';
         document.getElementById('gross-margin-rate').value = data.grossMarginRate || '';
+    }
+
+    const sixdata = JSON.parse(localStorage.getItem('formSixData'));
+    if (sixdata) {
+        document.getElementById('annual-sales').value = sixdata.annualSales || '';
+        document.getElementById('gross-margin-rate').value = data.grossMarginRate || '';
+
+        sixdata.yearlyInputs.forEach((input, index) => {
+            document.getElementById(`sales-growth-year-${index + 1}`).value = input.growthRate || '';
+            document.getElementById(`gross-margin-year-${index + 1}`).value = input.grossMarginRate || '';
+        });
     }
 }
 
@@ -368,3 +395,87 @@ window.onload = function() {
     console.log("Stored Properties:", properties); // 保存されたデータをログに出力
     // 他の初期化コード
 };
+
+//　6年分の売上シミュレーション
+function calculate6YearSimulation() {
+    let sales = parseFloat(document.getElementById('annual-sales').value);
+    let simulationResults = [];
+
+    for (let i = 1; i <= 6; i++) {
+        const growthRate = parseFloat(document.getElementById(`sales-growth-year-${i}`).value) / 100;
+        const grossMarginRate = parseFloat(document.getElementById(`gross-margin-year-${i}`).value) / 100;
+
+        const totalInvestment = parseFloat(localStorage.getItem('totalInvestment')) || 0;
+        document.getElementById('total-investment-input').value = totalInvestment.toLocaleString();
+
+        const depreciation = parseFloat(document.getElementById('depreciation').value) || 0;
+
+        const personnel = parseFloat(document.getElementById('personnel').value) || 0;
+        const promotion = parseFloat(document.getElementById('promotion').value) || 0;
+        const equipmentCost = parseFloat(document.getElementById('equipment-cost').value) || 0;
+        const general = parseFloat(document.getElementById('general').value) || 0;
+
+        // 年間の月間運営費用を算出
+        const annualPersonnel = personnel * 12;
+        const annualPromotion = promotion * 12;
+        const annualEquipmentCost = equipmentCost * 12;
+        const annualOperatingCosts = annualPersonnel + annualPromotion + annualEquipmentCost + general * 12;
+
+        const totalPersonnel = annualPersonnel;  // 4. 人件費計
+        const totalPromotion = annualPromotion;  // 5. 販売促進費計
+        const totalEquipmentCost = annualEquipmentCost;  // 6. 設備費計
+        const annualDepreciation = totalInvestment / depreciation * 12;  // 7. うち減価償却費
+        const totalSGA = annualOperatingCosts + annualDepreciation;  // 8. 販売費一般管理費合計
+
+        sales *= (1 + growthRate);
+        const grossProfit = sales * grossMarginRate;
+        const operatingProfit = grossProfit - totalSGA;
+        const netIncome = operatingProfit * 0.6;  // 税引後純利益 (40%税金)
+        const cashFlow = netIncome + parseFloat(document.getElementById('annual-depreciation').value);
+
+        simulationResults.push({
+            year: i,
+            sales,
+            grossProfit,
+            operatingProfit,
+            netIncome,
+            cashFlow
+        });
+    }
+
+    displaySimulationResults(simulationResults);
+}
+
+function displaySimulationResults(results) {
+    const resultsTable = document.getElementById('simulation-results');
+    resultsTable.innerHTML = '';
+
+    results.forEach(result => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${result.year}</td>
+            <td>${Math.trunc(result.sales).toLocaleString()}</td>
+            <td>${Math.trunc(result.grossProfit).toLocaleString()}</td>
+            <td>${Math.trunc(result.operatingProfit).toLocaleString()}</td>
+            <td>${Math.trunc(result.netIncome).toLocaleString()}</td>
+        `;
+        resultsTable.appendChild(row);
+    });
+}
+
+// ページロード時に年次入力フィールドを動的に生成
+document.addEventListener('DOMContentLoaded', function() {
+    const yearlyInputsTable = document.getElementById('yearly-inputs');
+
+    for (let i = 1; i <= 6; i++) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${i}年目</td>
+            <td><input type="number" id="sales-growth-year-${i}" value="0" oninput="saveFormData()"></td>
+            <td><input type="number" id="gross-margin-year-${i}" value="45" oninput="saveFormData()"></td>
+        `;
+        yearlyInputsTable.appendChild(row);
+    }
+
+    loadFormData();
+});
